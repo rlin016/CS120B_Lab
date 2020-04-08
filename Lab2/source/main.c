@@ -30,10 +30,7 @@ int main(void) {
 		}
 		tempA = tempA >> 1;
 	}
-	PORTC = cnt & 0x0F;
-	if((PINA & 0x0F) == 0x0F){
-		PORTC = PORTC | 0x80;
-	}
+	PORTC = cnt;
      }
     return 1;
 }
