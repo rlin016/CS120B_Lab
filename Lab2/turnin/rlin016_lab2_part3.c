@@ -21,12 +21,12 @@ int main(void) {
     /* Insert your solution below */
     while (1) {
 	tempA = 0x00;
-	cnt = 0x00;
+	cnt = 0x04;
 	tempA = PINA;
 	tempA = (tempA & 0x0F); //should yield the result of 0000 xxxx where x is the given input
-	while(tempA){
-		if(tempA & 0x01){
-			cnt = cnt + 1;			
+	while(tempA){ //ends only when there are no zeroes...
+		if((tempA & 0x01)){
+			cnt = cnt - 1;			
 		}
 		tempA = tempA >> 1;
 	}
