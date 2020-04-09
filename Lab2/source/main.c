@@ -15,22 +15,28 @@
 int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRA = 0x00; PORTA = 0x00;
-	DDRC = 0xFF; PORTC = 0x00;
+	DDRB = 0x00; PORTB = 0x00;
+	DDRC = 0x00; PORTC = 0x00;
+	DDRD = 0xFF; PORTD = 0x00;
 
-	unsigned char tempA, cnt;
+	unsigned char tempA, tempB, tempC;
     /* Insert your solution below */
     while (1) {
-	tempA = 0x00;
-	cnt = 0x04;
 	tempA = PINA;
-	tempA = (tempA & 0x0F); //should yield the result of 0000 xxxx where x is the given input
-	while(tempA){ //ends only when there are no zeroes...
-		if((tempA & 0x01)){
-			cnt = cnt - 1;			
-		}
-		tempA = tempA >> 1;
+	tempB = PINB;
+	tempC = PINC;
+	
+	if(tempA > 140 || tempB > 140 || tempC > 140){
+		PORTD = PORTD | 0x01;
 	}
-	PORTC = cnt;
+	else if(((tempA + tempB) > 140) || ((tempA + tempC) > 140) || ((tempB + tempC) > 140)){
+		PORTD = PORTD | 0x01;
+	}
+	else if((tempA + tempB + tempC) > 140){
+		PORTD = PORTD | 0x01;
+	}
+	
+	
      }
     return 1;
 }
