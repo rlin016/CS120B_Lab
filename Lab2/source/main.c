@@ -19,23 +19,23 @@ int main(void) {
 	DDRC = 0x00; PORTC = 0x00;
 	DDRD = 0xFF; PORTD = 0x00;
 
-	unsigned char tempA, tempB, tempC;
+	unsigned char tempA, tempB, tempC, sum;
     /* Insert your solution below */
     while (1) {
 	tempA = PINA;
 	tempB = PINB;
 	tempC = PINC;
+	sum = tempA + tempB + tempC;
 	
-	if(tempA > 140 || tempB > 140 || tempC > 140){
-		PORTD = PORTD | 0x01;
-	}
-	else if(((tempA + tempB) > 140) || ((tempA + tempC) > 140) || ((tempB + tempC) > 140)){
-		PORTD = PORTD | 0x01;
-	}
-	else if((tempA + tempB + tempC) > 140){
-		PORTD = PORTD | 0x01;
+	PORTD = sum & 0xFC;
+	
+	if(((tempA - tempC) > 80) || ((tempC - tempA) > 80)){
+		PORTD = PORTD | 0x02;
 	}
 	
+	if(sum > 140){
+		PORTD = PORTD | 0x01;
+	}	
 	
      }
     return 1;

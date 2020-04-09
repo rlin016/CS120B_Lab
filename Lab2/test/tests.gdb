@@ -26,71 +26,110 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-# Example test:
-test "PINA : 0x00 => PORTC : 0x04"
-# Set inputs
+test "PINA: 0x8C, PINB: 0x00, PINC: 0x00 => PORTD: 0x8E"
+setPINA 0x8C
+setPINB 0x00
+setPINC 0x00
+continue 2
+expectPORTD 0x8E
+checkResult
+
+test "PINA: 0x8D, PINB: 0x00, PINC: 0x00 => PORTD : 0x8F"
+setPINA 0x8D
+setPINB 0x00
+setPINC 0x00
+continue 2
+expectPORTD 0x8F
+checkResult
+
+test "PINA: 0x00, PINB: 0x8D, PINC: 0x00 => PORTD: 0x8D"
 setPINA 0x00
-# Continue for several ticks
+setPINB 0x8D
+setPINC 0x00
 continue 2
-# Set expect values
-expectPORTC 4
-# Check pass/fail
+expectPORTD 0x8D
 checkResult
 
-# Add tests below
-test "PINA : 0x01 => PORTC: 0x03"
+test "PINA: 0x00, PINB: 0x00, PINC: 0x8D => PORTD: 0x8F"
+setPINA 0x00
+setPINB 0x00
+setPINC 0x8D
+continue 2
+expectPORTD 0x8F
+checkResult
+
+test "PINA: 0x46, PINB: 0x00, PINC: 0x46 => PORTD: 0x8C"
+setPINA 0x46
+setPINB 0x00
+setPINC 0x46
+continue 2
+expectPORTD 0x8C
+checkResult
+
+test "PINA: 0x47, PINB: 0x00, PINC: 0x46 => PORTD: 0x8D"
+setPINA 0x47
+setPINB 0x00
+setPINC 0x46
+continue 2
+expectPORTD 0x8D
+checkResult
+
+test "PINA: 0x78, PINB: 0x00, PINC: 0x14 => PORTD: 0x8E"
+setPINA 0x78
+setPINB 0x00
+setPINC 0x14
+continue 2
+expectPORTD 0x8E
+checkResult
+
+test "PINA: 0x78, PINB: 0x00, PINC: 0x15 => PORTD: 0x8F"
+setPINA 0x78
+setPINB 0x00
+setPINC 0x15
+continue 2
+expectPORTD 0x8F
+checkResult
+
+test "PINA: 0x64, PINB: 0x14, PINC: 0x14 => PORTD: 0x8C"
+setPINA 0x64
+setPINB 0x14
+setPINC 0x14
+continue 2
+expectPORTD 0x8C
+checkResult
+
+test "PINA: 0x65, PINB: 0x15, PINC: 0x14 => PORTD: 0x8F"
+setPINA 0x65
+setPINB 0x15
+setPINC 0x14
+continue 2
+expectPORTD 0x8F
+checkResult
+
+test "PINA: 0x00, PINB: 0x00, PINC: 0x00 => PORTD: 0x00"
+setPINA 0x00
+setPINB 0x00
+setPINC 0x00
+continue 2
+expectPORTD 0x00
+checkResult
+
+test "PINA: 0x01, PINB: 0x01, PINC: 0x01 => PORTD: 0x00"
 setPINA 0x01
+setPINB 0x01
+setPINC 0x01
 continue 2
-expectPORTC 0x03
+expectPORTD 0x00
 checkResult
 
-test "PINA : 0x03 => PORTC: 0x02"
-setPINA 0x03
+test "PINA: 0x0A, PINB: 0x0A, PINC: 0x0A => PORTD: 0x1C"
+setPINA 0x0A
+setPINB 0x0A
+setPINC 0x0A
 continue 2
-expectPORTC 0x02
+expectPORTD 0x1C
 checkResult
 
-test "PINA : 0x04 => PORTC: 0x03"
-setPINA 0x04
-continue 2
-expectPORTC 0x03
-checkResult
-
-test "PINA : 0x08 => PORTC: 0x03"
-setPINA 0x08
-continue 2
-expectPORTC 0x03
-checkResult
-
-test "PINA : 0x0E => PORTC: 0x01"
-setPINA 0x0E
-continue 2
-expectPORTC 0x01
-checkResult
-
-test "PINA : 0x0F => PORTC: 0x00"
-setPINA 0x0F
-continue 2
-expectPORTC 0x00
-checkResult
-
-test "PINA : 0xF0 => PORTC: 0x04"
-setPINA 0xF0
-continue 2
-expectPORTC 0x04
-checkResult
-
-test "PINA : 0xF1 => PORTC : 0x03"
-setPINA 0xF1
-continue 2
-expectPORTC 0x03
-checkResult
-
-test "PINA : 0xFF => PORTC: 0x00"
-setPINA 0xFF
-continue 2
-expectPORTC 0x00
-checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
