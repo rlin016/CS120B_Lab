@@ -17,25 +17,38 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0x00;
 	DDRB = 0x00; PORTB = 0x00;
 	DDRC = 0xFF; PORTC = 0x00;
-    /* Insert your solution below */
-	unsigned tempA, tempB, cnt;
-    while (1) {
-	tempA = PINA;
-	tempB = PINB;
-	cnt = 0x00;
-	while(tempA){
-		if(tempA & 0x01){
-			cnt = cnt + 1;
-		}
-		tempA = tempA >> 1;
+    /* Insert your solution below 
+ */	while(1){
+	unsigned tempA;
+	tempA = PINA & 0x0F;
+	switch(tempA){
+		case 15: 
+		case 14:
+		case 13:
+			PORTC = PORTC | 0x01;
+		case 12:
+		case 11:
+		case 10:
+			PORTC = PORTC | 0x02;
+		case 9:
+		case 8:
+		case 7:
+			PORTC = PORTC | 0x04;
+		case 6:
+		case 5:
+			PORTC = PORTC | 0x08;
+		case 4:
+		case 3:
+			PORTC = PORTC | 0x10;
+		case 2:
+		case 1:
+			PORTC = PORTC | 0x20;
+			break;
 	}
-	while(tempB){
-		if(tempB & 0x01){
-			cnt = cnt + 1;
-		}
-		tempB = tempB >> 1;
+
+	if(PORTC & 0x02){
+		PORTC = PORTC | 0x40;
 	}
-	PORTC = cnt;
     }
     return 1;
 }
