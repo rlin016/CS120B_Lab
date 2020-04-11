@@ -32,14 +32,50 @@ continue 2
 expectPORTC 0x40
 checkResult
 
+test "PINA: 0x30 => PORTC: 0xC0"
+setPINA 0x30
+continue 2
+expectPORTC 0xC0
+checkResult
+
+test "PINA: 0x70 => PORTC: 0x40"
+setPINA 0x70
+continue 2
+expectPORTC 0x40
+checkResult
+
 test "PINA: 0x01 => PORTC: 0x60"
 setPINA 0x01
 continue 2
 expectPORTC 0x60
 checkResult
 
+test "PINA: 0x31 => PORTC: 0xE0"
+setPINA 0x31
+continue 2
+expectPORTC 0xE0
+checkResult
+
+test "PINA: 0x11 => PORTC: 0x60"
+setPINA 0x11
+continue 2
+expectPORTC 0x60
+checkResult
+
 test "PINA: 0x04 => PORTC: 0x70"
 setPINA 0x04
+continue 2
+expectPORTC 0x70
+checkResult
+
+test "PINA: 0x34 => PORTC: 0xF0"
+setPINA 0x34
+continue 2
+expectPORTC 0xF0
+checkResult
+
+test "PINA: 0x54 => PORTC: 0x70"
+setPINA 0x54
 continue 2
 expectPORTC 0x70
 checkResult

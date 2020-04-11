@@ -50,6 +50,10 @@ int main(void) {
 		if(!(outC & 0x08)){
 			outC = outC | 0x40;
 		}
+		tempA = PINA;
+		if(!(tempA & 0x40) && (tempA & 0x20) && (tempA & 0x10)){
+			outC = outC | 0x80;
+		}
 		PORTC = outC;
 	}	
 		
