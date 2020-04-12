@@ -1,7 +1,13 @@
-Breakpoint 1 at 0xee: file source/main.c, line 23.
+Breakpoint 1 at 0x106: file source/main.c, line 22.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"PINA: 0x15 => PORTB: 0x01, PORTC: 0x50"..."PINA: 0x00 => PORTB: 0x00, PORTC: 0x00"..."PINA: 0xFF => PORTB: 0x0F, PORTC: 0xF0"...======================================================
-Quitting: Remote doesn't know how to detach
+"PIND: 0x00, PINB: 0x00 => PORTB: 0x00"..."PIND: 0x02, PINB: 0x01 => PORTB: 0x00"..."PIND: 0x04, PINB: 0x00 => PORTB: 0x04"...
+	Expected 0x04 
+	PORTB '0x800025:	0x00
+"PIND: 0x03, PINB: 0x01 => PORTB: 0x04"...
+	Expected 0x04 
+	PORTB '0x800025:	0x00
+"PIND: 0x23, PINB: 0x00 => PORTB: 0x02"...test/tests.gdb:60: Error in sourced command file:
+Remote communication error.  Target disconnected.: Connection reset by peer.

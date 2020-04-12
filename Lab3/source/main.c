@@ -14,22 +14,21 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-	DDRA = 0x00; PORTA = 0x00;
-	DDRB = 0xFF; PORTB = 0x00;
-	DDRC = 0xFF; PORTC = 0x00;
+	DDRB = 0xF0; PORTB = 0x00;
+	DDRD = 0x00; PORTD = 0x00;
     /* Insert your solution below */
-	unsigned tempA, outB, outC;
+	unsigned short input, output;
 	
 	while(1){
-		tempA = PINA;
-		outB = tempA >> 4;
-		outC = tempA << 4;
-		
-		PORTB = outB;
-		PORTC = outC;
-
-		
+		output = 0x00;
+		input = PIND + (PINB & 0x01);
+		if(input >= 70){
+			output = 0x02;
+		}
+		else if(input > 5){
+			output = 0x04;
+		}
+		PORTB = output;	
 	}	
-		
 	return 1;
 }
