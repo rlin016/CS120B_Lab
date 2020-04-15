@@ -21,7 +21,7 @@ int main(void) {
 	
 	while(1){
 		output = 0x00;
-		input = PIND + (PINB & 0x01);
+		input = (PIND << 1) | (PORTB & 0x01);
 		if(input >= 70){
 			output = 0x02;
 		}

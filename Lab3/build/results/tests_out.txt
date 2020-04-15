@@ -1,13 +1,7 @@
-Breakpoint 1 at 0x106: file source/main.c, line 22.
+Breakpoint 1 at 0x108: file source/main.c, line 22.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"PIND: 0x00, PINB: 0x00 => PORTB: 0x00"..."PIND: 0x02, PINB: 0x01 => PORTB: 0x00"..."PIND: 0x04, PINB: 0x00 => PORTB: 0x04"...
-	Expected 0x04 
-	PORTB '0x800025:	0x00
-"PIND: 0x03, PINB: 0x01 => PORTB: 0x04"...
-	Expected 0x04 
-	PORTB '0x800025:	0x00
-"PIND: 0x23, PINB: 0x00 => PORTB: 0x02"...test/tests.gdb:60: Error in sourced command file:
-Remote communication error.  Target disconnected.: Connection reset by peer.
+"PIND: 0x00, PINB: 0x00 => PORTB: 0x00"..."PIND: 0x02, PINB: 0x01 => PORTB: 0x00"...test/tests.gdb:39: Error in sourced command file:
+Remote connection closed
