@@ -44,28 +44,21 @@ setPINA 0x01
 continue 2
 expectPORTC 8
 checkResult
-setPINA 0x01
-continue 2
-expectPORTB 0x02
-checkResult
 
-test "Hold press, no let go (0x02)"
-setPINA 0x01
-continue 2
-expectPORTB 0x02
-checkResult
-
-test "Let go button (0x02)"
+test "PINA: 0x00 => PORTC: 8"
 setPINA 0x00
 continue 2
-expectPORTB 0x02
+expectPORTC 8
 checkResult
 
-test "Press button (0x01)"
+test "PINA: 0x01, cont, PINA: 0x00 => PORTC: 9"
 setPINA 0x01
 continue 2
-expectPORTB 0x01
+setPINA 0x00
+continue 2
+expectPORTC 9
 checkResult
+
 
 
 # Report on how many tests passed/tests ran
