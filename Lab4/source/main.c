@@ -13,68 +13,56 @@
 //#include "RIMS.h"
 #endif
 
-enum States{Start, ZeroOn, ZeroPress, OneOn, OnePress} state, next_state;
-
+enum States{Start, ZeroOn, ZeroPress, OneOn, OnePress} state;
+unsigned char tempA, tempB;
 void Tick();
 
 int main(void) {
-	DDRA = 0xFF; PINA = 0x00;
-	DDRB = 0x00; PORTB = 0x00;
+	DDRA = 0x00; PINA = 0x00;
+	DDRB = 0xFF; PORTB = 0x00;
 	state = Start;
     while (1){
+	tempA = PINA;
 	Tick();
+	PORTB = tempB;
     }
     return 1;
 }
 
 void Tick(){
-	unsigned tempA, tempB;
-	tempA = PINA;
-	tempB = PORTB;
+//	tempA = PINA;
+//	tempB = 0x00;
+	
+//	tempB = tempA;
 	switch(state){
 		case Start:
-			next_state = ZeroOn;
+			state = ZeroOn;
 			break;
 		case ZeroOn:
 			if(tempA & 0x01){
-				next_state = ZeroPress;
-			}
-			else{
-				next_state = ZeroOn;
+				state = ZeroPress;
 			}
 			break;
 		case ZeroPress:
 			if(!(tempA & 0x01)){
-				next_state = OneOn;
-			}
-			else{
-				next_state = ZeroPress;
+				state = OneOn;
 			}
 			break;
 		case OneOn:
 			if(tempA & 0x01){
-				next_state = OnePress;
-			}
-			else{
-				next_state = OneOn;
+				state = OnePress;
 			}
 			break;
 		case OnePress:
 			if(!(tempA & 0x01)){
-				next_state = ZeroOn;
-			}
-			else{
-				next_state = OnePress;
+				state = ZeroOn;
 			}
 			break;
 		default:
-			next_state = ZeroOn;
+			state = ZeroOn;
 			break;
 	}
 	switch (state){
-			case Start:
-				tempB = 0x00;
-				break;
 			case ZeroOn:
 				tempB = 0x01;
 				break;
@@ -91,6 +79,5 @@ void Tick(){
 				tempB = 0x00;
 				break;
 	}
-	state = next_state;
-	PORTB = tempB;
+//	PORTB = tempB;
 };

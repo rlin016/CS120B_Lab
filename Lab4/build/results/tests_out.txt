@@ -3,9 +3,5 @@ Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"PINA: 0x01, 0x00 => PORTB: 0x02"...
-	Expected 0x02 
-	PORTB '0x800025:	0x01
-
-	Expected 3 but got state:1======================================================
+"PINA: 0x01, 0x00 => PORTB: 0x02"...======================================================
 Quitting: Remote doesn't know how to detach
