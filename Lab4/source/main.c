@@ -20,6 +20,7 @@ void Tick();
 int main(void) {
 	DDRA = 0x00; PINA = 0x00;
 	DDRB = 0xFF; PORTB = 0x00;
+
 	state = Start;
     while (1){
 	tempA = PINA;
@@ -37,6 +38,7 @@ void Tick(){
 	switch(state){
 		case Start:
 			state = ZeroOn;
+			break;
 		case ZeroOn:
 			if(tempA & 0x01){
 				state = ZeroPress;
