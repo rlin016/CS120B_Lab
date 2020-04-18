@@ -13,71 +13,84 @@
 //#include "RIMS.h"
 #endif
 
-enum States{Start, ZeroOn, ZeroPress, OneOn, OnePress} state;
+enum States{Start, ZeroOn, ZeroPress, OneOn, OnePress} state, next_state;
 
 void Tick();
 
 int main(void) {
-    /* Insert DDR and PORT initializations */
 	DDRA = 0xFF; PINA = 0x00;
 	DDRB = 0x00; PORTB = 0x00;
-//	unsigned char tempA, tempB;
-    /* Insert your solution below */
-    while (1) {
+	state = Start;
+    while (1){
 	Tick();
     }
     return 1;
 }
 
 void Tick(){
-//	DDRA = 0xFF; PINA = 0x00;
-//	DDRB = 0x00; PORTB = 0x00;
 	unsigned tempA, tempB;
 	tempA = PINA;
 	tempB = PORTB;
 	switch(state){
-
-		state = ZeroOn;
-		break;
-	case ZeroOn:
-		if(tempA & 0x01){
-			state = ZeroPress;
-		}
-		break;
-	case ZeroPress:
-		if(!(tempA & 0x01)){
-			state = OneOn;
-		}
-		break;
-	case OneOn:
-		if(tempA & 0x01){
-			state = OnePress;
-		}
-		break;
-	case OnePress:
-		if(!(tempA & 0x01)){
-			state = ZeroOn;
-		}
-		break;
-	default:
-		state = ZeroOn;
-		break;
-	}
-	switch (state){
+		case Start:
+			next_state = ZeroOn;
+			break;
 		case ZeroOn:
-			tempB = 0x01;
+			if(tempA & 0x01){
+				next_state = ZeroPress;
+			}
+			else{
+				next_state = ZeroOn;
+			}
 			break;
 		case ZeroPress:
-			tempB = 0x01;
+			if(!(tempA & 0x01)){
+				next_state = OneOn;
+			}
+			else{
+				next_state = ZeroPress;
+			}
 			break;
 		case OneOn:
-			tempB = 0x02;
+			if(tempA & 0x01){
+				next_state = OnePress;
+			}
+			else{
+				next_state = OneOn;
+			}
 			break;
 		case OnePress:
-			tempB = 0x02;
+			if(!(tempA & 0x01)){
+				next_state = ZeroOn;
+			}
+			else{
+				next_state = OnePress;
+			}
+			break;
 		default:
-			tempB = 0x00;
+			next_state = ZeroOn;
 			break;
 	}
+	switch (state){
+			case Start:
+				tempB = 0x00;
+				break;
+			case ZeroOn:
+				tempB = 0x01;
+				break;
+			case ZeroPress:
+				tempB = 0x01;
+				break;
+			case OneOn:
+				tempB = 0x02;
+				break;
+			case OnePress:
+				tempB = 0x02;
+				break;
+			default:
+				tempB = 0x00;
+				break;
+	}
+	state = next_state;
 	PORTB = tempB;
 };
