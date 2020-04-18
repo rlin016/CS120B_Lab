@@ -28,18 +28,31 @@ echo Running all tests..."\n\n
 
 # Example test:
 test "PINA: 0x01, 0x00 => PORTB: 0x02"
-set state = Start
 setPINA 0x00
 continue 2
+expectPORTB 0x01
+checkResult
+
 setPINA 0x01
 continue 2
+expectPORTB 0x02
+checkResult
+
+setPINA 0x01
+continue 2
+expectPORTB 0x02
+checkResult
+
 setPINA 0x00
 continue 2
 expectPORTB 0x02
-expect state 3
 checkResult
 
-# Add tests below
+setPINA 0x01
+continue 2
+expectPORTB 0x01
+checkResult
+
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed

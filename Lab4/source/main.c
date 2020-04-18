@@ -37,7 +37,6 @@ void Tick(){
 	switch(state){
 		case Start:
 			state = ZeroOn;
-			break;
 		case ZeroOn:
 			if(tempA & 0x01){
 				state = ZeroPress;
@@ -63,21 +62,21 @@ void Tick(){
 			break;
 	}
 	switch (state){
-			case ZeroOn:
-				tempB = 0x01;
-				break;
-			case ZeroPress:
-				tempB = 0x01;
-				break;
-			case OneOn:
-				tempB = 0x02;
-				break;
-			case OnePress:
-				tempB = 0x02;
-				break;
-			default:
-				tempB = 0x00;
-				break;
+		case ZeroOn:
+			tempB = 0x01;
+			break;			
+		case ZeroPress:
+			tempB = 0x02;
+			break;			
+		case OneOn:
+			tempB = 0x02;
+			break;
+		case OnePress:
+			tempB = 0x01;
+			break;
+		default:
+			tempB = 0x00;
+			break;
 	}
 //	PORTB = tempB;
 };
