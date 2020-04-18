@@ -73,7 +73,7 @@ void Tick(){
 			tempC = 0;
 			break;
 		case Up:
-			if(tempC < 8){
+			if(tempC < 9){
 				tempC = tempC + 1;
 			}
 			break;
