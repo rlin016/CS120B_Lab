@@ -13,7 +13,7 @@
 //#include "RIMS.h"
 #endif
 
-enum States{Start, Wait, Up, Down, Reset} state;
+enum States{Start, Wait, WaitStatus, Up, Down, Reset} state;
 unsigned char tempA, tempC;
 void Tick();
 
@@ -62,7 +62,15 @@ void Tick(){
 			else if(tempA & 0x00){
 				state = Wait;
 			}
-			break;			
+			else{
+				state = WaitStatus;
+			}
+			break;
+		case WaitStatus:
+			if(tempA == 0x00){
+				state = Wait;
+			}			
+			break;
 	}
 	switch (state){
 		case Start:
@@ -82,7 +90,7 @@ void Tick(){
 				tempC = tempC - 1;
 			}
 			break;
-			
+		case WaitStatus:
+			break;		
 	}
-//	PORTB = tempB;
 };
