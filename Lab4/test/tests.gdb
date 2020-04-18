@@ -33,7 +33,17 @@ continue 2
 expectPORTC 7
 checkResult
 
-test "First press, no let go (0x02)"
+test "PINA: 0x01 => PORTC: 8"
+setPINA 0x01
+continue 2
+expectPORTC 8
+checkResult
+
+test "PINA: 0x01 =>PORTC: 8"
+setPINA 0x01
+continue 2
+expectPORTC 8
+checkResult
 setPINA 0x01
 continue 2
 expectPORTB 0x02
