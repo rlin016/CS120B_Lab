@@ -22,6 +22,7 @@ int main(void) {
 	DDRC = 0xFF; PORTC = 0x00;
 
 	state = Start;
+	tempC = 7;
     while (1){
 	tempA = PINA;
 	Tick();
@@ -69,7 +70,7 @@ void Tick(){
 		case Wait:
 			break;
 		case Reset:
-			tempC = 7;
+			tempC = 0;
 			break;
 		case Up:
 			if(tempC < 9){

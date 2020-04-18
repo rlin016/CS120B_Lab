@@ -1,12 +1,9 @@
-Breakpoint 1 at 0x152: file source/main.c, line 25.
+Breakpoint 1 at 0x158: file source/main.c, line 26.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"No press, first start (0x01)"...
-	Expected 0x01 
-	PORTB '0x800025:	0x00
-"First press, no let go (0x02)"...
+"PINA: 0x00 => PORTC: 7"..."First press, no let go (0x02)"...
 	Expected 0x02 
 	PORTB '0x800025:	0x00
 "Hold press, no let go (0x02)"...

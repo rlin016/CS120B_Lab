@@ -27,10 +27,10 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x00 => PORTC: 7"
+test "No press, first start (0x01)"
 setPINA 0x00
 continue 2
-expectPORTC 7
+expectPORTB 0x01
 checkResult
 
 test "First press, no let go (0x02)"
