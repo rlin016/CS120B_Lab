@@ -40,7 +40,7 @@ void Tick(){
 			state = Wait;
 			break;
 		case Wait:
-			if(tempA & 0x03 == 0x03){
+			if((tempA & 0x03) == 0x03){
 				state = Reset;
 			}
 			else if(tempA & 0x01){
@@ -55,7 +55,7 @@ void Tick(){
 			break;
 		case Up:
 		case Down:
-			if(tempA & 0x03 == 0x03){
+			if((tempA & 0x03) == 0x03){
 				state = Reset;
 			}
 			else{
@@ -64,8 +64,12 @@ void Tick(){
 			break;			
 	}
 	switch (state){
+		case Start:
+			break;
+		case Wait:
+			break;
 		case Reset:
-			tempC = 0x00;
+			tempC = 7;
 			break;
 		case Up:
 			if(tempC < 9){
