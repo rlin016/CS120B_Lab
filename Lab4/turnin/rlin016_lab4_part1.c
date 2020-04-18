@@ -20,6 +20,7 @@ void Tick();
 int main(void) {
 	DDRA = 0x00; PINA = 0x00;
 	DDRB = 0xFF; PORTB = 0x00;
+
 	state = Start;
     while (1){
 	tempA = PINA;
@@ -63,21 +64,21 @@ void Tick(){
 			break;
 	}
 	switch (state){
-			case ZeroOn:
-				tempB = 0x01;
-				break;
-			case ZeroPress:
-				tempB = 0x01;
-				break;
-			case OneOn:
-				tempB = 0x02;
-				break;
-			case OnePress:
-				tempB = 0x02;
-				break;
-			default:
-				tempB = 0x00;
-				break;
+		case ZeroOn:
+			tempB = 0x01;
+			break;			
+		case ZeroPress:
+			tempB = 0x02;
+			break;			
+		case OneOn:
+			tempB = 0x02;
+			break;
+		case OnePress:
+			tempB = 0x01;
+			break;
+		default:
+			tempB = 0x00;
+			break;
 	}
 //	PORTB = tempB;
 };
