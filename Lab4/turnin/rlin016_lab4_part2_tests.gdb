@@ -27,67 +27,40 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-
-test "Set Lock (0x80)"
-setPINA 0x80
+test "PINA: 0x00 => PORTC: 7"
+setPINA 0x00
 continue 2
-expectPORTB 0x00
+expectPORTC 7
 checkResult
 
-test "Testing Failure State (0x01)"
+test "PINA: 0x01 => PORTC: 8"
 setPINA 0x01
 continue 2
-expectPORTB 0x00
+expectPORTC 8
 checkResult
 
-test "Testing Failure State 2 (0x03)"
+test "PINA: 0x01 =>PORTC: 8"
 setPINA 0x01
 continue 2
-expectPORTB 0x00
+expectPORTC 8
 checkResult
 
-test "Testing Failure State 3 (0x07)"
-setPina 0x07
+test "PINA: 0x00 => PORTC: 8"
+setPINA 0x00
 continue 2
-expectPORTB 0x00
+expectPORTC 8
 checkResult
 
-test "Testing Failure State 3 (0x04 -> 0x03)"
-setPINA 0x04
+test "PINA: 0x01, cont, PINA: 0x00 => PORTC: 9"
+setPINA 0x01
 continue 2
-expectPORTB 0x00
-checkResult
-setPINA 0x03
+setPINA 0x00
 continue 2
-expectPORTB 0x00
+expectPORTC 9
 checkResult
 
-test "Testing Pass State (0x04 -> 0x02)"
-setPINA 0x04
-continue 2
-expectPORTB 0x00
-checkResult
-setPINA 0x02
-continue 2
-expectPORTB 0x01
-checkResult
 
-setPINA 0x80
-continue 2
 
-test "Testing Pass State 2 (0x04 -> 0x04 -> 0x02)"
-setPINA 0x04
-continue 2
-expectPORTB 0x00
-checkResult
-setPINA 0x04
-continue 2
-expectPORTB 0x00
-checkResult
-setPINA 0x02
-continue 2
-expectPORTB 0x01
-checkResult 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
