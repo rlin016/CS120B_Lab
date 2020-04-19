@@ -62,25 +62,22 @@ continue 2
 expectPORTB 0x00
 checkResult
 
-test "Testing Pass State (0x04 -> 0x02)"
+test "Testing Fail State (0x04 -> 0x02)"
 setPINA 0x04
 continue 2
 expectPORTB 0x00
 checkResult
 setPINA 0x02
 continue 2
-expectPORTB 0x01
+expectPORTB 0x00
 checkResult
 
-setPINA 0x80
-continue 2
-
-test "Testing Pass State 2 (0x04 -> 0x04 -> 0x02)"
+test "Testing Pass State 2 (0x04 -> 0x00 -> 0x02)"
 setPINA 0x04
 continue 2
 expectPORTB 0x00
 checkResult
-setPINA 0x04
+setPINA 0x00
 continue 2
 expectPORTB 0x00
 checkResult

@@ -3,5 +3,5 @@ Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Set Lock (0x80)"..."Testing Failure State (0x01)"..."Testing Failure State 2 (0x03)"..."Testing Failure State 3 (0x07)"..."Testing Failure State 3 (0x04 -> 0x03)"..."Testing Pass State (0x04 -> 0x02)"..."Testing Pass State 2 (0x04 -> 0x04 -> 0x02)"...======================================================
+"Set Lock (0x80)"..."Testing Failure State (0x01)"..."Testing Failure State 2 (0x03)"..."Testing Failure State 3 (0x07)"..."Testing Failure State 3 (0x04 -> 0x03)"..."Testing Fail State (0x04 -> 0x02)"..."Testing Pass State 2 (0x04 -> 0x00 -> 0x02)"...======================================================
 Quitting: Remote doesn't know how to detach
