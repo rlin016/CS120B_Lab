@@ -13,7 +13,7 @@
 //#include "RIMS.h"
 #endif
 
-enum States{Start, Wait, SharpPress, Unlock, Lock} state;
+enum States{Start, Wait, SharpPress, SharpPressRelease, Unlock, Lock} state;
 unsigned char tempA, tempB;
 void Tick();
 
@@ -49,11 +49,10 @@ void Tick(){
 			}
 			break;
 		case SharpPress:
-			if(tempA == 0x02){
-				state = Unlock;
+			if(tempA == 0x00){
+				state = SharpPressRelease;
 			}
 			else if(tempA == 0x04){
-				state = SharpPress;
 			}
 			else if((tempA & 0x80) == 0x80){
 				state = Lock;
@@ -62,6 +61,16 @@ void Tick(){
 				state = Wait;
 			}
 			break;
+		case SharpPressRelease:
+			if(tempA == 0x02){
+				state = Unlock;
+			}
+			else if(tempA == 0x00){
+			}
+			else{
+				state = Wait;
+			}
+				
 		case Unlock:
 			if((tempA & 0x80) == 0x80){
 				state = Lock;
@@ -75,6 +84,7 @@ void Tick(){
 		case Start:
 		case Wait:
 		case SharpPress:
+		case SharpPressRelease:
 			break;
 		case Unlock:
 			tempB = 0x01;
