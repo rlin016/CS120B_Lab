@@ -1,6 +1,6 @@
 # University of California, Riverside
 # CS120B Makefile
-MMCU=atmega1284
+MMCU=atmega1284p
 FREQ=8000000
 
 PATHB=build/
@@ -15,7 +15,7 @@ OBJS=$(patsubst $(PATHS)%,$(PATHO)%,$(SOURCES:.c=.o))
 
 CLEAN=rm -rf
 # Simulator
-SIMAVRDIR=/usr/csshare/pkgs/simavr
+SIMAVRDIR=/usr/local/bin
 SIMAVR=simavr
 
 # Compiler
