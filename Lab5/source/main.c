@@ -22,9 +22,9 @@ int main(void) {
 	DDRC = 0xFF; PORTC = 0x00;
 
 	state = Start;
-	tempC = 0;
+	tempC = 0x00;
     while (1){
-	tempA = PINA;
+	tempA = ~PINA;
 	Tick();
 	PORTC = tempC;
     }
