@@ -20,7 +20,7 @@ int main(void) {
 	unsigned tempA, outC;
 	
 	while(1){
-		tempA = PINA & 0x0F;
+		tempA = (~PINA) & 0x0F;
 		outC = 0x00;
 		switch (tempA){
 			case 15:

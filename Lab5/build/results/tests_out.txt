@@ -1,4 +1,10 @@
-Breakpoint 1 at 0x15e: file source/main.c, line 22.
+Breakpoint 1 at 0x15c: file source/main.c, line 22.
 Note: automatically using hardware breakpoints for read-only addresses.
-Detaching from program: /home/raquelxyz/CS120B_Lab/Lab5/build/objects/main.elf, Remote target
+======================================================
+Running all tests..."
+
+"PINA: 0xFF => PORTC: 0x40"...
+	Expected 0x40 
+	PORTC '0x800028:	0x3f
+======================================================
 Remote doesn't know how to detach
