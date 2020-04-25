@@ -13,7 +13,7 @@
 //#include "RIMS.h"
 #endif
 
-enum States{Start, Wait, WaitStatus, Up, Down, Reset} state;
+enum States{Start, Wait, UpPress, UpRelease, DownPress, DownRelease, Reset} state;
 unsigned char tempA, tempC;
 void Tick();
 
@@ -41,56 +41,65 @@ void Tick(){
 			state = Wait;
 			break;
 		case Wait:
-			if((tempA & 0x03) == 0x03){
+			if(tempA == 0x01){
+				state = UpPress;
+				break;
+			}
+			else if(tempA == 0x02){
+				state = DownPress;
+				break;
+			}
+			else if(tempA == 0x03){
+				state = Reset;
+				break;
+			}
+			break;
+		case UpPress:
+			if (tempA == 0x03){
 				state = Reset;
 			}
-			else if(tempA & 0x01){
-				state = Up;
+			else if(tempA == 0x00){
+				state = UpRelease;
 			}
-			else if(tempA & 0x02){
-				state = Down;
+			break;
+		case UpRelease:
+			state = Wait;
+			break;
+		case DownPress:
+			if(tempA == 0x03){
+				state = Reset;
 			}
+			else if(tempA == 0x00){
+				state = DownRelease;
+			}
+			break;
+		case DownRelease:
+			state = Wait;
 			break;
 		case Reset:
 			state = Wait;
 			break;
-		case Up:
-		case Down:
-			if((tempA & 0x03) == 0x03){
-				state = Reset;
-			}
-			else if(tempA & 0x00){
-				state = Wait;
-			}
-			else{
-				state = WaitStatus;
-			}
-			break;
-		case WaitStatus:
-			if(tempA == 0x00){
-				state = Wait;
-			}			
-			break;
+
 	}
 	switch (state){
 		case Start:
-			break;
 		case Wait:
+		case UpPress:
+		case DownPress:
+			break;
 			break;
 		case Reset:
 			tempC = 0;
 			break;
-		case Up:
+		case UpRelease:
 			if(tempC < 9){
 				tempC = tempC + 1;
 			}
 			break;
-		case Down:
+		case DownRelease:
 			if(tempC > 0){
 				tempC = tempC - 1;
 			}
-			break;
-		case WaitStatus:
 			break;		
 	}
 };
