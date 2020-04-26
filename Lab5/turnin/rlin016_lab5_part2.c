@@ -36,16 +36,17 @@ void Tick(){
 //	tempB = 0x00;
 	
 //	tempB = tempA;
+
 	switch(state){
 		case Start:
 			state = Wait;
 			break;
 		case Wait:
-			if((tempA & 0x01) == 0x01){
+			if((tempA & 0x03) == 0x01){
 				state = UpPress;
 				break;
 			}
-			else if((tempA & 0x02) == 0x02){
+			else if((tempA & 0x03) == 0x02){
 				state = DownPress;
 				break;
 			}
@@ -80,7 +81,7 @@ void Tick(){
 			if((tempA & 0x03) == 0x03){
 				state = Reset;
 			}
-			else if(!(tempA & 0x01)){
+			else if(!(tempA & 0x02)){
 				state = Wait;
 			}
 			break;
@@ -94,7 +95,7 @@ void Tick(){
 		case Wait:
 		case UpRelease:
 		case DownRelease:
-			break;
+			break; 
 		case Reset:
 			tempC = 0;
 			break;
