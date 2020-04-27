@@ -6,6 +6,8 @@
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
+ * 
+ * 	LAB 5 VIDEO: https://youtu.be/_UngKywTBGc 
  */
 #include <avr/io.h>
 #ifdef _SIMULATE_
