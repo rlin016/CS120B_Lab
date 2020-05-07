@@ -1,7 +1,7 @@
-Breakpoint 1 at 0x316: file source/main.c, line 30.
+Breakpoint 1 at 0x316: file source/main.c, line 28.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Testing Period 1 of Cycle"..."Testing Period 2 of Cycle"..."Testing Period 3 of Cycle"..."Testing Period 4 of Cycle"...======================================================
+"Testing Period 1 of Cycle"..."Testing Period 2 of Cycle"..."Testing Period 3 of Cycle"..."Testing Period 4 of Cycle"..."Button Press"..."Release game"..."Continue cycle"..."Press again"...======================================================
 Remote doesn't know how to detach

@@ -34,7 +34,7 @@ int main(void){
 }
 
 void Tick(){
-	tempA = PINA;
+	tempA = PORTA;
 	tempB = PORTB;
 	switch(state){
 		case Start:
