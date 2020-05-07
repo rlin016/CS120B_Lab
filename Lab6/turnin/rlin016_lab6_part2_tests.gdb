@@ -59,25 +59,27 @@ checkResult
 test "Release game"
 setPINA 0xFE
 timeContinue
+expectPORTB 0x01
+checkResult
 setPINA 0xFF
 timeContinue
-expectPORTB 0x04
+expectPORTB 0x02
 checkResult
 
 test "Continue cycle"
 setPINA 0xFF
 timeContinue
-expectPORTB 0x02
+expectPORTB 0x04
 checkResult
 
 test "Press again"
 setPINA 0xFE
 timeContinue
-expectPORTB 0x02
+expectPORTB 0x04
 checkResult
 setPINA 0xFF
 timeContinue
-expectPORTB 0x02
+expectPORTB 0x04
 checkResult
 
 # Report on how many tests passed/tests ran

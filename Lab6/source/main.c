@@ -15,7 +15,7 @@
 #endif
 
 enum States{Start, Light, Maint, MaintPress, MaintRelease}state;
-unsigned char tempA, tempB, count;
+unsigned char tempA, tempB, count, forward;
 
 void Tick();
 void DisplayLight();
@@ -66,11 +66,11 @@ void Tick(){
 		case Start:
 			break;
 		case Light:
+		case MaintRelease:
 			DisplayLight();
 			break;
 		case Maint:
 		case MaintPress:
-		case MaintRelease:
 			break;
 	}
 	PORTB = tempB;
@@ -80,14 +80,22 @@ void DisplayLight(){
 	if(!tempB){
 		tempB = 0x01;
 		count = 0x02;
+		forward = 1;
 	} else{
-		if (count){
+		if (count && forward){
 			tempB = tempB << 1;
 			count--;
 		}
-		else {
+		else if(count && !forward){
 			tempB = tempB >> 1;
 			count++;
+			forward = 1;
+		}
+		else{
+			tempB = tempB >> 1;
+			count++;
+			forward = 0;
+			
 		}
 	}
 }
