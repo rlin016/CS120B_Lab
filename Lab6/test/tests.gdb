@@ -47,35 +47,35 @@ expectPORTB 0x02
 checkResult
 
 test "Button Press"
-setPINA 0x01
+setPINA 0xFE
 timeContinue
 expectPORTB 0x02
 checkResult
-setPINA 0x00
+setPINA 0xFF
 timeContinue
 expectPORTB 0x02
 checkResult
 
 test "Release game"
-setPINA 0x01
+setPINA 0xFE
 timeContinue
-setPINA 0x00
+setPINA 0xFF
 timeContinue
 expectPORTB 0x04
 checkResult
 
 test "Continue cycle"
-setPINA 0x00
+setPINA 0xFF
 timeContinue
 expectPORTB 0x02
 checkResult
 
 test "Press again"
-setPINA 0x01
+setPINA 0xFE
 timeContinue
 expectPORTB 0x02
 checkResult
-setPINA 0x00
+setPINA 0xFF
 timeContinue
 expectPORTB 0x02
 checkResult

@@ -21,7 +21,7 @@ void Tick();
 void DisplayLight();
 
 int main(void){
-	DDRA = 0x00; PORTA = 0x00;
+	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00; 
 	TimerSet(300);
 	TimerOn();
@@ -34,7 +34,7 @@ int main(void){
 }
 
 void Tick(){
-	tempA = PINA;
+	tempA = ~PINA;
 	tempB = PORTB;
 	switch(state){
 		case Start:
