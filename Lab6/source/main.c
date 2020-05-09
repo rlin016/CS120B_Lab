@@ -15,17 +15,18 @@
 //#include "../header/timer.h"
 #endif
 
-enum States{Start, Light, Maint, MaintPress, MaintRelease}state;
-unsigned char tempA, tempB, count, forward;
+enum States{Start, Light} state;
+unsigned char tempB;
 
 void Tick();
-void DisplayLight();
+void Display_Lights();
 
 int main(void){
-	DDRA = 0x00; PORTA = 0xFF;
-	DDRC = 0xFF; PORTC = 0x00; 
-	TimerSet(300);
+	DDRA = 0x00; PORTA = 0x00;
+	DDRB = 0xFF; PORTB = 0x00;
+	TimerSet(1000);
 	TimerOn();
+
 	while(1){
 		Tick();
 		while(!TimerFlag);
@@ -35,69 +36,31 @@ int main(void){
 }
 
 void Tick(){
-	tempA = ~PINA;
-	tempB = PORTC;
+	tempB = PORTB;
 	switch(state){
 		case Start:
 			tempB = 0x00;
 			state = Light;
-			break;
+		break;
 		case Light:
-			if(tempA & 0x01){
-				state = Maint;
-			}
-			break;
-		case Maint:
-			if(!(tempA & 0x01)){
-				state = MaintPress;
-			}
-			break;
-		case MaintPress:
-			if((tempA & 0x01)){
-				state = MaintRelease;
-			}
-			break;
-		case MaintRelease:
-			if(!(tempA & 0x01)){
-				state = Light;
-			}
-			break;
+		break;
 	}
 	switch(state){
 		case Start:
-			break;
+		break;
 		case Light:
-		case MaintRelease:
-			DisplayLight();
-			break;
-		case Maint:
-		case MaintPress:
+			Display_Lights();
 			break;
 	}
-	PORTC = tempB;
+	PORTB = tempB;
 }
 
-void DisplayLight(){
-	if(!tempB){
+void Display_Lights(){
+	if(!(tempB == 0x04) && (tempB)){
+		tempB = tempB << 1;
+	}
+	else{
 		tempB = 0x01;
-		count = 0x02;
-		forward = 1;
-	} else{
-		if (count && forward){
-			tempB = tempB << 1;
-			count--;
-		}
-		else if(count && !forward){
-			tempB = tempB >> 1;
-			count++;
-			forward = 1;
-		}
-		else{
-			tempB = tempB >> 1;
-			count++;
-			forward = 0;
-			
-		}
 	}
 }
 	
