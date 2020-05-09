@@ -6,6 +6,7 @@
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
+ *	Video Link: https://youtu.be/ve6R-ylTU58
  */
 #include <avr/io.h>
 #ifdef _SIMULATE_
@@ -22,7 +23,7 @@ void DisplayLight();
 
 int main(void){
 	DDRA = 0x00; PORTA = 0xFF;
-	DDRB = 0xFF; PORTB = 0x00; 
+	DDRC = 0xFF; PORTC = 0x00; 
 	TimerSet(300);
 	TimerOn();
 	while(1){
@@ -35,7 +36,7 @@ int main(void){
 
 void Tick(){
 	tempA = ~PINA;
-	tempB = PORTB;
+	tempB = PORTC;
 	switch(state){
 		case Start:
 			tempB = 0x00;
@@ -73,7 +74,7 @@ void Tick(){
 		case MaintPress:
 			break;
 	}
-	PORTB = tempB;
+	PORTC = tempB;
 }
 
 void DisplayLight(){

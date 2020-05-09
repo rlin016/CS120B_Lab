@@ -6,6 +6,7 @@
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
+ *	Video Link: https://youtu.be/ve6R-ylTU58
  */
 #include <avr/io.h>
 #ifdef _SIMULATE_
@@ -14,56 +15,90 @@
 //#include "../header/timer.h"
 #endif
 
-enum States{Start, Light}state;
-
-unsigned char tempB;
+enum States{Start, Light, Maint, MaintPress, MaintRelease}state;
+unsigned char tempA, tempB, count, forward;
 
 void Tick();
-void Display_Lights();
+void DisplayLight();
 
-int main(void) {
-   
-	DDRA = 0x00; PORTA = 0x00;
-	DDRB = 0xFF; PORTB = 0x00;
-	TimerSet(1000);
+int main(void){
+	DDRA = 0x00; PORTA = 0xFF;
+	DDRC = 0xFF; PORTC = 0x00; 
+	TimerSet(300);
 	TimerOn();
-//	unsigned char tempB;
-    while (1) {
-	Tick();
-	while(!TimerFlag);
-	TimerFlag = 0;
-    }
-    return 1;
+	while(1){
+		Tick();
+		while(!TimerFlag);
+		TimerFlag = 0;
+	}
+	return 1;
 }
 
 void Tick(){
-	tempB = PORTB;
+	tempA = ~PINA;
+	tempB = PORTC;
 	switch(state){
 		case Start:
 			tempB = 0x00;
 			state = Light;
-		break;
-	
+			break;
 		case Light:
-			
-		break;
+			if(tempA & 0x01){
+				state = Maint;
+			}
+			break;
+		case Maint:
+			if(!(tempA & 0x01)){
+				state = MaintPress;
+			}
+			break;
+		case MaintPress:
+			if((tempA & 0x01)){
+				state = MaintRelease;
+			}
+			break;
+		case MaintRelease:
+			if(!(tempA & 0x01)){
+				state = Light;
+			}
+			break;
 	}
 	switch(state){
 		case Start:
-			
-		break;
+			break;
 		case Light:
-			Display_Lights();			
-		break;
+		case MaintRelease:
+			DisplayLight();
+			break;
+		case Maint:
+		case MaintPress:
+			break;
 	}
-	PORTB = tempB;
+	PORTC = tempB;
 }
 
-void Display_Lights(){
-	if(!(tempB == 0x04) && (tempB)){
-		tempB = tempB << 1;
-	}
-	else{
+void DisplayLight(){
+	if(!tempB){
 		tempB = 0x01;
+		count = 0x02;
+		forward = 1;
+	} else{
+		if (count && forward){
+			tempB = tempB << 1;
+			count--;
+		}
+		else if(count && !forward){
+			tempB = tempB >> 1;
+			count++;
+			forward = 1;
+		}
+		else{
+			tempB = tempB >> 1;
+			count++;
+			forward = 0;
+			
+		}
 	}
 }
+	
+

@@ -28,58 +28,22 @@ echo Running all tests..."\n\n
 
 test "Testing Period 1 of Cycle"
 timeContinue
-expectPORTB 0x01
+expectPORTC 0x01
 checkResult
 
 test "Testing Period 2 of Cycle"
 timeContinue
-expectPORTB 0x02
+expectPORTC 0x02
 checkResult
 
 test "Testing Period 3 of Cycle"
 timeContinue
-expectPORTB 0x04
+expectPORTC 0x04
 checkResult
 
 test "Testing Period 4 of Cycle"
 timeContinue
-expectPORTB 0x02
-checkResult
-
-test "Button Press"
-setPINA 0xFE
-timeContinue
-expectPORTB 0x02
-checkResult
-setPINA 0xFF
-timeContinue
-expectPORTB 0x02
-checkResult
-
-test "Release game"
-setPINA 0xFE
-timeContinue
-expectPORTB 0x01
-checkResult
-setPINA 0xFF
-timeContinue
-expectPORTB 0x02
-checkResult
-
-test "Continue cycle"
-setPINA 0xFF
-timeContinue
-expectPORTB 0x04
-checkResult
-
-test "Press again"
-setPINA 0xFE
-timeContinue
-expectPORTB 0x04
-checkResult
-setPINA 0xFF
-timeContinue
-expectPORTB 0x04
+expectPORTC 0x01
 checkResult
 
 # Report on how many tests passed/tests ran
