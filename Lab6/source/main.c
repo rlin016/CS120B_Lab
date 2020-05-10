@@ -124,7 +124,9 @@ void Tick(){
 			break;		
 		case UpRotate:
 			if(timeWait == 0x0A){
-				tempC = tempC + 1;
+				if(tempC < 9){
+					tempC = tempC + 1;
+				}
 				timeWait = 0;
 			}
 			else{
@@ -133,7 +135,9 @@ void Tick(){
 			break;
 		case DownRotate:
 			if(timeWait == 0x0A){
-				tempC = tempC - 1;
+				if(tempC > 0){
+					tempC = tempC - 1;
+				}
 				timeWait = 0;
 			}
 			else{
