@@ -1,0 +1,7 @@
+Breakpoint 1 at 0x520: file source/main.c, line 31.
+Note: automatically using hardware breakpoints for read-only addresses.
+======================================================
+Running all tests..."
+
+"Testing output of Count"..."Testing increment of Count"..."Testing max increment of Count (increment by 10)"..."Testing decrement of Count"..."Testing max decrement of count (decrement by 10)"..."Testing reset (increment to 6 and reset)"...======================================================
+Remote doesn't know how to detach

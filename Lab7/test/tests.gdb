@@ -26,6 +26,48 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
+test "Testing output of Count"
+timeContinue
+expectPORTC 0x00
+checkResult
+
+test "Testing increment of Count"
+setPINA 0xFE
+timeContinue 
+expectPORTC 0x01
+checkResult
+
+test "Testing max increment of Count (increment by 10)"
+setPINA 0xFE
+timeContinue 10
+expectPORTC 0x09
+checkResult
+
+setPINA 0xFF
+timeContinue
+
+test "Testing decrement of Count"
+setPINA 0xFD
+timeContinue
+expectPORTC 0x08
+checkResult
+
+test "Testing max decrement of count (decrement by 10)"
+setPINA 0xFD
+timeContinue 10
+expectPORTC 0x00
+checkResult
+
+test "Testing reset (increment to 6 and reset)"
+setPINA 0xFE
+timeContinue 6
+expectPORTC 0x05
+checkResult
+setPINA 0xFF
+setPINA 0xFC
+timeContinue
+expectPORTC 0x00
+checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
