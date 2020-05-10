@@ -29,17 +29,20 @@ echo Running all tests..."\n\n
 test "Startup correct"
 setPINA 0xFF
 timeContinue
-expectPORTC 0x00
+expectPORTC 0x07
+checkResult
+
+test "Decrement test"
+setPINA 0xFD
+timeContinue
+expectPORTC 0x06
 checkResult
 
 test "Decrement test from 0"
 setPINA 0xFD
-timeContinue
+timeContinue 10
 expectPORTC 0x00
 checkResult
-
-setPINA 0xFF
-timeContinue
 
 test "Increment test"
 setPINA 0xFE
@@ -47,17 +50,12 @@ timeContinue
 expectPORTC 0x01
 checkResult
 
-setPINA 0xFF
-timeContinue
-
 test "Increment to max test"
 setPINA 0xFE
 timeContinue 10
 expectPORTC 0x09
 checkResult
 
-setPINA 0xFF
-timeContinue
 
 test "Decrement test"
 setPINA 0xFD

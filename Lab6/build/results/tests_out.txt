@@ -1,7 +1,13 @@
-Breakpoint 1 at 0x324: file source/main.c, line 28.
+Breakpoint 1 at 0x326: file source/main.c, line 28.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Startup correct"..."Decrement test from 0"..."Increment test"..."Increment to max test"..."Decrement test"..."Reset Test"...======================================================
+"Startup correct"..."Decrement test"..."Decrement test from 0"..."Increment test"...
+	Expected 0x01 
+	PORTC '0x800028:	0x00
+"Increment to max test"..."Decrement test"...
+	Expected 0x08 
+	PORTC '0x800028:	0x09
+"Reset Test"...======================================================
 Remote doesn't know how to detach

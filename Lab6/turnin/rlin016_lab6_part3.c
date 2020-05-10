@@ -14,8 +14,8 @@
 #include "timer.h"
 #endif
 
-enum States{Start, Wait, UpPress, DownPress, Reset} state;
-unsigned char tempA, tempC;
+enum States{Start, Wait, UpPress, DownPress, Reset, UpRotate, DownRotate} state;
+unsigned char tempA, tempC, timeWait;
 void Tick();
 
 int main(void) {
@@ -24,7 +24,7 @@ int main(void) {
 	TimerSet(100);
 	TimerOn();
 	state = Start;
-	tempC = 0x00;
+	tempC = 0x07;
     while (1){
 	Tick();
 	while(!TimerFlag);
@@ -60,25 +60,49 @@ void Tick(){
 				break;
 			}
 			else if((tempA & 0x03) == 0x01){
-				state = UpPress;
+				timeWait = 0;
+				state = UpRotate;
 				break;
 			}
-			state = Wait;
-			break;
+			else{
+				state = Wait;
+				break;
+			}
 		case DownPress:
 			if((tempA & 0x03) == 0x03){
 				state = Reset;
 				break;
 			}
 			else if((tempA & 0x03) == 0x02){
-				state = DownPress;
+				timeWait = 0;
+				state = DownRotate;
 				break;
 			}
-			state = Wait;
-			break;
+			else{
+				state = Wait;
+				break;
+			}
 		case Reset:
 			state = Wait;
 			break;
+		case UpRotate:
+			if((tempA & 0x03) == 0x01){
+				state = UpRotate;
+				break;
+			}
+			else{
+				state = Wait;
+				break;
+			}
+		case DownRotate:
+			if((tempA & 0x03) == 0x02){
+				state = DownRotate;
+				break;
+			}
+			else{
+				state = Wait;
+				break;
+			}			
 
 	}
 	switch (state){
@@ -98,6 +122,25 @@ void Tick(){
 				tempC = tempC - 1;
 			}
 			break;		
+		case UpRotate:
+			if(timeWait == 0x0A){
+				tempC = tempC + 1;
+				timeWait = 0;
+			}
+			else{
+				timeWait++;
+			}
+			break;
+		case DownRotate:
+			if(timeWait == 0x0A){
+				tempC = tempC - 1;
+				timeWait = 0;
+			}
+			else{
+				timeWait++;
+			}
+			break;
+				
 	}
 	PORTC = tempC;
 };
