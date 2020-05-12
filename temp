@@ -1,0 +1,21 @@
+#incldue <avr/io.h>
+#ifdef _SIMULATE_
+#include "simAVRHeader.h"
+#include "../header/timer.h"
+#endif
+
+void ADC_init(){
+  ADCSRA |= (1 << ADEN) | (1 << ADSC) | (1 << ADATE);
+}
+
+unsigned short ADC_result;
+unsigned char tempB, tempD;
+
+void Tick();
+
+int main(void){
+  AC_init();
+  ADC_result = 0x00;
+  tempB = 0x00;
+  tempD = 0x00;
+  DDRB = 0xFF; PORTB = 0x00;
