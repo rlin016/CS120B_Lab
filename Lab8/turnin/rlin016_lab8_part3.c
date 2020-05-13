@@ -4,8 +4,10 @@
 #include "../header/timer.h"
 #endif
 
+//Video Link Part 3: https://youtu.be/NWRJohSbi00
+
 void ADC_init(){
-  ADCSRA |= (1 << ADEN) | (1 << ADSC) | (! << ADATE);
+  ADCSRA |= (1 << ADEN) | (1 << ADSC) | (1 << ADATE);
 }
 
 unsigned short ADC_result;
@@ -28,8 +30,10 @@ int main(void){
 }
 void Tick(){
   ADC_result = ADC;
-  tempB = (char)(ADC_result);
-  tempD = (char)((ADC_result >> 8) & 0x03);
-  PORTB = tempB;
-  PORTD = tempD;
+  if(ADC_result & 0x0080){
+	  PORTB = 0x01;
+  }
+  else{
+	  PORTB = 0x00;
+  }
 }
