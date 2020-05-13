@@ -4,6 +4,8 @@
 #include "../header/timer.h"
 #endif
 
+//Video Link for Part 2: https://youtu.be/YkllppXvBYY
+
 void ADC_init(){
   ADCSRA |= (1 << ADEN) | (1 << ADSC) | (1 << ADATE);
 }

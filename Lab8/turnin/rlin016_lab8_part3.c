@@ -29,7 +29,7 @@ int main(void){
 void Tick(){
   ADC_result = ADC;
   tempB = (char)(ADC_result);
-  tempD = (char)((ADC_result >> 8) & 0x03));
+  tempD = (char)((ADC_result >> 8) & 0x03);
   PORTB = tempB;
   PORTD = tempD;
 }
