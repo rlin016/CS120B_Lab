@@ -50,7 +50,15 @@ void PWM_off(){
 }
 
 void Tick();
-unsigned char tempA;
+unsigned char tempA, i;
+enum StatesPower{PowerStart, PwrOn, POn, PwrOff, POff}power;
+enum StatesScale{Start, Wait, Up, UpRelease, Down, DownRelease}scale;
+enum PowerStatus{Off, On}pwr;
+const double notes[] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
+
+void TickOnOff();
+void TickScale();
+
 int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRB = 0xFF; PORTB = 0x00;
@@ -58,9 +66,12 @@ int main(void) {
     /* Insert your solution below */
 	PWM_on();
 	TimerSet(50);
-	TimerOn();	
+	TimerOn();
+	i = 0; 	
     while (1){
-	Tick();
+	tempA = ~PINA & 0x07;
+	TickOnOff();
+	TickScale();
 	while(!TimerFlag);
 	TimerFlag = 0;
     }
@@ -68,20 +79,101 @@ int main(void) {
     return 1;
 }
 
-void Tick(){
-	tempA = ~PINA & 0x07;
-	if(tempA == 0x01){
-		set_PWM(261.63);
-		
+void TickOnOff(){
+	switch(power){
+		case PowerStart:
+			if(tempA == 0x01){
+				power = PwrOn;
+			}
+			break;
+		case PwrOn:
+			if(tempA == 0x00){
+				power = POn;
+			}
+			break;
+		case POn:
+			if(tempA == 0x01){
+				power = PwrOff;
+			}
+			break;
+		case PwrOff:
+			if(tempA == 0x00){
+				power = POff;
+			}
+			break;
+		case POff:
+			if(tempA == 0x01){
+				power = PwrOn;
+			}
+			break;
 	}
-	else if(tempA == 0x02){
-		set_PWM(293.66);
+	switch(power){
+		case PowerStart:
+		case POn:
+		case POff:
+			break;
+		case PwrOn:
+			pwr = On;
+			break;
+		case PwrOff:
+			pwr = Off;
+			break;
 	}
-	else if (tempA == 0x04){
-		set_PWM(329.63);
-	}
-	else{
+}
+
+void TickScale(){
+	if(!pwr){
 		set_PWM(0);
 	}
+	else{
+	switch(scale){
+		case Start: 
+			scale = Wait;
+			break;
+		case Wait:
+			if(tempA == 0x02){
+				scale = Up;
+			}
+			else if(tempA == 0x04){
+				scale = Down;
+			}
+			break;
+		case Up:
+			scale = UpRelease;
+			break;
 
+		case UpRelease:
+			if(tempA == 0x00){
+				scale = Wait;
+			}
+			break;
+		case Down:
+			scale = DownRelease;
+			break;
+		case DownRelease:
+			if(tempA == 0x00){
+				scale = Wait;
+			}
+			break;
+	}
+	switch(scale){
+		case Start:
+		case UpRelease:
+		case DownRelease:
+			break;
+		case Wait:
+			set_PWM(notes[i]);
+			break;
+		case Up:
+			if(i < 7){
+				set_PWM(notes[++i]);
+			}
+			break;
+		case Down:
+			if(i > 0){
+				set_PWM(notes[--i]);
+			}
+			break;
+	}
+	}
 }

@@ -52,9 +52,9 @@ void PWM_off(){
 void Tick();
 unsigned char tempA, i;
 enum StatesPower{PowerStart, PwrOn, POn, PwrOff, POff}power;
-enum StatesScale{Start, Wait, Up, Down}scale;
+enum StatesScale{Start, Wait, Up, UpRelease, Down, DownRelease}scale;
 enum PowerStatus{Off, On}pwr;
-double notes[] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
+const double notes[] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
 
 void TickOnOff();
 void TickScale();
@@ -65,7 +65,7 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
     /* Insert your solution below */
 	PWM_on();
-	TimerSet(3000);
+	TimerSet(50);
 	TimerOn();
 	i = 0; 	
     while (1){
@@ -105,6 +105,7 @@ void TickOnOff(){
 			if(tempA == 0x01){
 				power = PwrOn;
 			}
+			break;
 	}
 	switch(power){
 		case PowerStart:
@@ -115,12 +116,16 @@ void TickOnOff(){
 			pwr = On;
 			break;
 		case PwrOff:
-			power = Off;
+			pwr = Off;
 			break;
 	}
 }
 
 void TickScale(){
+	if(!pwr){
+		set_PWM(0);
+	}
+	else{
 	switch(scale){
 		case Start: 
 			scale = Wait;
@@ -134,15 +139,30 @@ void TickScale(){
 			}
 			break;
 		case Up:
-			scale = Wait;
+			scale = UpRelease;
+			break;
+
+		case UpRelease:
+			if(tempA == 0x00){
+				scale = Wait;
+			}
 			break;
 		case Down:
-			scale = Wait;
+			scale = DownRelease;
+			break;
+		case DownRelease:
+			if(tempA == 0x00){
+				scale = Wait;
+			}
 			break;
 	}
 	switch(scale){
 		case Start:
+		case UpRelease:
+		case DownRelease:
+			break;
 		case Wait:
+			set_PWM(notes[i]);
 			break;
 		case Up:
 			if(i < 7){
@@ -154,5 +174,6 @@ void TickScale(){
 				set_PWM(notes[--i]);
 			}
 			break;
+	}
 	}
 }
