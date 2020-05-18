@@ -50,16 +50,49 @@ void PWM_off(){
 }
 
 void Tick();
-unsigned char tempA;
+unsigned char tempA, i, j;
+enum States {Start, Wait, Playing}state;
+const double notes[] = {369.994, 
+			440.00, 493.883, 440.00, 659.255, 554.365,
+			0,
+			293.665,
+			440.00, 493.883, 440.00, 659.255, 554.365,
+			0,
+			220.000,
+			440.00, 493.883, 440.00, 659.255, 554.365,
+			0,
+			659.255, 739.989, 659.255,
+			554.365, 	
+			493.883, 440.000, 493.883, 440.000, 369.994
+			};
+const unsigned char time[] = {2, 
+		              1, 1, 1, 1, 2,
+			      0,
+       	                      2, 
+			      1, 1, 1, 1, 2, 
+			      0,
+			      2,
+			      1, 1, 1, 1, 2,
+			      0,
+			      0, 0, 1,
+			      1,
+			      1, 1, 1, 1, 2					      
+			     };
+//const unsigned char downTime[] = {0, 0, 0, 0, 0, 0}
+
+void Tick();
+
 int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRB = 0xFF; PORTB = 0x00;
 	DDRA = 0x00; PORTA = 0xFF;
     /* Insert your solution below */
 	PWM_on();
-	TimerSet(200);
-	TimerOn();	
+	TimerSet(100);
+	TimerOn();
+	i = 0; 	
     while (1){
+	tempA = ~PINA & 0x01;
 	Tick();
 	while(!TimerFlag);
 	TimerFlag = 0;
@@ -69,18 +102,41 @@ int main(void) {
 }
 
 void Tick(){
-	tempA = ~PINA & 0x07;
-	if(tempA == 0x01){
-		set_PWM(261.63);
+	switch(state){
+		case Start:
+			state = Wait;
+			break;
+		case Wait:
+			if(tempA == 0x01){
+				i = 0;
+				j = 0;
+				state = Playing;
+			}
+			break;
+		case Playing:
+			if(i == 30){
+				set_PWM(0);
+				state = Wait;
+			}
+			break;
 	}
-	else if(tempA == 0x02){
-		set_PWM(293.66);
-	}
-	else if (tempA == 0x04){
-		set_PWM(329.63);
-	}	
-	else{
-		set_PWM(0);
+	
+	switch(state){
+		case Start:
+		case Wait:
+			break;
+		case Playing:
+			if(i < 30){
+				if(j == 0x00){
+					j = time[i];
+					set_PWM(notes[i++]);
+				}
+				else{
+					
+					j--;
+				}
+			}
+			break;
 	}
 
 }

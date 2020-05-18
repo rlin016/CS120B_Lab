@@ -57,7 +57,7 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
     /* Insert your solution below */
 	PWM_on();
-	TimerSet(3000);
+	TimerSet(200);
 	TimerOn();	
     while (1){
 	Tick();
@@ -78,7 +78,7 @@ void Tick(){
 	}
 	else if (tempA == 0x04){
 		set_PWM(329.63);
-	}
+	}	
 	else{
 		set_PWM(0);
 	}
