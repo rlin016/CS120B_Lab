@@ -20,17 +20,18 @@ int main(void){
   tempD = 0x00;
   DDRB = 0xFF; PORTB = 0x00;
   DDRD = 0xFF; PORTD = 0x00;
-  DDRA = 0x00; PORTA = 0x00;
+  DDRA = 0x00; PORTA = 0xFF;
   while(1){
     Tick();
-  }
+ }
   return 1;
 }
 
 void Tick(){
   ADC_result = ADC;
   tempB = (char)(ADC_result);
-  tempD = (char)((ADC_result >> 8) & (0x03));
+  tempD = (char)((ADC_result >> 8));
   PORTB = tempB;
   PORTD = tempD;
 }
+
