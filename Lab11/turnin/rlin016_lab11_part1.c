@@ -77,6 +77,8 @@ int TickInputs(int state){
 }
 
 
+
+
 int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRB = 0xFF; PORTB = 0x00;
