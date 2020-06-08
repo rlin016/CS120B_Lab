@@ -21,24 +21,24 @@
 
 enum TickScroll_state{ScrollWait, ScrollGetString, ScrollOutputString}tickstate;
 
-const char* CSString = "CS120B is Legend... wait for it DARY!";
+const char* CSString = "                CS120B is Legend... wait for it DARY!";
 
-char* outString;
+char outString[50] = "";
+
 
 int TickOutputLCD(int state){
-//	LCD_DisplayString(1, stringTest);
-	static unsigned char i;
+//	LCD_DisplayString(1, outString);
+	static unsigned char track;
 	switch(state){
 		case ScrollWait:
-			LCD_DisplayString(1, outString);
+			track = 0;
 			state = ScrollGetString;
 			break;
 		case ScrollGetString:
-		//	LCD_DisplayString(1,stringTest);
 			state = ScrollOutputString;
 			break;
 		case ScrollOutputString:
-			state = ScrollOutputString;
+			state = ScrollGetString;
 			break;
 	}
 
@@ -46,9 +46,13 @@ int TickOutputLCD(int state){
 		case ScrollWait: //wait for input A, do nothing for part 2
 			break;
 		case ScrollGetString: //use strncpy to get desired segment of string
-			strncpy(outString, CSString + 1, 16);
+			strncpy(outString, CSString + track, 16);
 			break;	
 		case ScrollOutputString: //use outputString to output to LCD to write.
+			track++;
+			if(track == (38 + 16)){
+				track = 0;
+			}
 			LCD_DisplayString(1, outString);
 			break;
 	}
@@ -68,10 +72,10 @@ int main(void) {
 	static struct Task task1;
 	struct Task *tasks[] = {&task1};
 	const unsigned short numTasks = sizeof(tasks) / sizeof(task*);
-	const char start = -1;
+//	const char start = -1;
 
 	task1.state = ScrollWait;
-	task1.period = 500;
+	task1.period = 250;
 	task1.elapsedTime = task1.period;
 	task1.TickFct = &TickOutputLCD;
 
@@ -82,7 +86,7 @@ int main(void) {
 
 //	LCD_init();
 
-	TimerSet(500);
+	TimerSet(250);
 	TimerOn();
 
 	unsigned short i;
@@ -92,7 +96,7 @@ int main(void) {
 			tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
 			tasks[i]->elapsedTime = 0;
 		}
-		tasks[i]->elapsedTime += 500;
+		tasks[i]->elapsedTime += 250;
 	}
 	while(!TimerFlag);
 	TimerFlag = 0;
